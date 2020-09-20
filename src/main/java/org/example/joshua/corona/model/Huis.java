@@ -1,6 +1,8 @@
 package org.example.joshua.corona.model;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Huis {
 
@@ -9,7 +11,11 @@ public class Huis {
     private int aantalKamers;
     private Adres adres;
     private Persoon[] bewoners;
-    private Persoon[] personenInhuis;
+
+    // De reden dat ik een ArrayList gebruik, is omdat je bij een fixed Array altijd het getal terug krijgt van de opgegeven grootte.
+    // Dus ook al als je geen enkel persoon toevoegt in de array.
+    // Bijvoorbeeld, Persoon[] personen = new Persoon[6]; personen.length, zal dus 6 zijn.
+    private List<Persoon> personenInhuis = new ArrayList<>();
 
     public int getAantalKamers() {
         return aantalKamers;
@@ -31,24 +37,37 @@ public class Huis {
         return bewoners;
     }
 
-    public void setBewoner(Persoon[] bewoners) {
+    public void setBewoners(Persoon[] bewoners) {
         this.bewoners = bewoners;
     }
 
-    public Persoon[] getPersonenInhuis() {
+    public List<Persoon> getPersonenInhuis() {
         return personenInhuis;
     }
 
-    public void setPersonenInhuis(Persoon[] personenInhuis) {
+    public void setPersonenInhuis(List<Persoon> personenInhuis) {
         this.personenInhuis = personenInhuis;
+    }
+
+    /**
+     * Deze methode voegt een persoon toe in een huis mits het maximum nog niet is bereikt
+     * @param persoon Persoon
+     */
+    public void voegPersoonToeInHuis(Persoon persoon) {
+        if (isMaxAantalBewonersBereikt()) {
+            System.out.println("Maximum aantal personen bij " + this.adres.getStraatnaam() + " " + this.adres.getHuisnummer() + " is bereikt");
+        } else {
+            this.personenInhuis.add(persoon);
+            System.out.println(persoon.getNaam() + " is bij " + this.adres.getStraatnaam() + " " + this.adres.getHuisnummer() + " toegevoegd");
+        }
     }
 
     /**
      * Deze methode controleert of het maximum aantal personen in een huis is bereikt
      * @return boolean
      */
-    public boolean isMaxAantalBewonersBereikt() {
-        return personenInhuis.length + bewoners.length == bewoners.length + MAX_AANTAL_PERSONEN_IN_HUIS_EXCL_BEWONERS;
+    private boolean isMaxAantalBewonersBereikt() {
+        return personenInhuis.size() + bewoners.length == bewoners.length + MAX_AANTAL_PERSONEN_IN_HUIS_EXCL_BEWONERS;
     }
 
     @Override
@@ -56,8 +75,8 @@ public class Huis {
         return "Huis{" +
                 "aantalKamers=" + aantalKamers +
                 ", adres=" + adres +
-                ", bewoners=" + bewoners +
-                ", personenInhuis=" + Arrays.toString(personenInhuis) +
+                ", bewoners=" + bewoners.length +
+                ", personenInhuis=" + personenInhuis.size() +
                 '}';
     }
 }
