@@ -41,7 +41,7 @@ public class Adres {
 
     @Override
     public String toString() {
-        return "org.example.joshua.corona.model.Adres{" +
+        return "Adres{" +
                 "straatnaam='" + straatnaam + '\'' +
                 ", huisnummer=" + huisnummer +
                 ", postcode='" + postcode + '\'' +
