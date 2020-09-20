@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Huis {
 
-    private static final int MAX_AANTAL_PERSONEN_IN_HUIS_EXCL_BEWONERS = 6;
+    public static final int MAX_AANTAL_PERSONEN_IN_HUIS_EXCL_BEWONERS = 6;
 
     private int aantalKamers;
     private Adres adres;
@@ -16,6 +16,10 @@ public class Huis {
     // Dus ook al als je geen enkel persoon toevoegt in de array.
     // Bijvoorbeeld, Persoon[] personen = new Persoon[6]; personen.length, zal dus 6 zijn.
     private List<Persoon> personenInhuis = new ArrayList<>();
+
+    public Huis(Adres adres) {
+        this.adres = adres;
+    }
 
     public int getAantalKamers() {
         return aantalKamers;
@@ -54,11 +58,11 @@ public class Huis {
      * @param persoon Persoon
      */
     public void voegPersoonToeInHuis(Persoon persoon) {
-        if (isMaxAantalBewonersBereikt()) {
+        if (isMaxAantalPersonenBereikt()) {
             System.out.println("Maximum aantal personen bij " + this.adres.getStraatnaam() + " " + this.adres.getHuisnummer() + " is bereikt");
         } else {
             this.personenInhuis.add(persoon);
-            System.out.println(persoon.getNaam() + " is bij " + this.adres.getStraatnaam() + " " + this.adres.getHuisnummer() + " toegevoegd");
+            System.out.println(persoon.getNaam() + " is bij " + this.adres.getStraatnaam() + " " + this.adres.getHuisnummer());
         }
     }
 
@@ -66,8 +70,8 @@ public class Huis {
      * Deze methode controleert of het maximum aantal personen in een huis is bereikt
      * @return boolean
      */
-    private boolean isMaxAantalBewonersBereikt() {
-        return personenInhuis.size() + bewoners.length == bewoners.length + MAX_AANTAL_PERSONEN_IN_HUIS_EXCL_BEWONERS;
+    private boolean isMaxAantalPersonenBereikt() {
+        return personenInhuis.size() == MAX_AANTAL_PERSONEN_IN_HUIS_EXCL_BEWONERS;
     }
 
     @Override

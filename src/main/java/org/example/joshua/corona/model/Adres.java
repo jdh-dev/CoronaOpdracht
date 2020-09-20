@@ -7,6 +7,13 @@ public class Adres {
     private String postcode;
     private String woonplaats;
 
+    public Adres(String straatnaam, int huisnummer, String postcode, String woonplaats) {
+        this.straatnaam = straatnaam;
+        this.huisnummer = huisnummer;
+        this.postcode = postcode;
+        this.woonplaats = woonplaats;
+    }
+
     public String getStraatnaam() {
         return straatnaam;
     }
