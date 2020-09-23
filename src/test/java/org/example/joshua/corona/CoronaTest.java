@@ -1,6 +1,7 @@
 package org.example.joshua.corona;
 
 import org.example.joshua.corona.model.*;
+import org.example.joshua.corona.utility.AdresUtil;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;
@@ -43,6 +44,17 @@ public class CoronaTest {
         for (Persoon persoon : gastHeer.getGastenLijst().getGastenInhuis()) {
             System.out.println(persoon);
         }
+    }
+
+    @Test
+    void testOfAdresAlBestaat() {
+        Adres a1 = new Adres("Esdoornlaan", 38, "9421RK", "Bovensmilde");
+        Huis h1 = new Huis(a1);
+        // Maak huis met hetzelfde adres
+        Huis h2 = new Huis(a1);
+
+        // Controleer of aantal huizen nog steeds gelijk is aan 1
+        assertThat(AdresUtil.getAdressen().size()).isEqualTo(1);
     }
 
 

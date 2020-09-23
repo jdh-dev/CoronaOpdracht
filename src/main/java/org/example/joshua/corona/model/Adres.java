@@ -1,5 +1,7 @@
 package org.example.joshua.corona.model;
 
+import org.example.joshua.corona.utility.AdresUtil;
+
 import java.util.Objects;
 
 public class Adres {
@@ -10,10 +12,10 @@ public class Adres {
     private String woonplaats;
 
     public Adres(String straatnaam, int huisnummer, String postcode, String woonplaats) {
-        this.straatnaam = straatnaam;
-        this.huisnummer = huisnummer;
-        this.postcode = postcode;
-        this.woonplaats = woonplaats;
+        setStraatnaam(straatnaam);
+        setHuisnummer(huisnummer);
+        setPostcode(postcode);
+        setWoonplaats(woonplaats);
     }
 
     public String getStraatnaam() {
@@ -29,7 +31,11 @@ public class Adres {
     }
 
     public void setHuisnummer(int huisnummer) {
-        this.huisnummer = huisnummer;
+        if (huisnummer <= 0) {
+            System.out.println("Geen geldige invoer. Kies een huisnummer dat groter is dan 0");
+        } else {
+            this.huisnummer = huisnummer;
+        }
     }
 
     public String getPostcode() {

@@ -1,5 +1,7 @@
 package org.example.joshua.corona.model;
 
+import org.example.joshua.corona.utility.AdresUtil;
+
 public class Huis {
 
     private int aantalKamers;
@@ -7,7 +9,11 @@ public class Huis {
     private Persoon[] bewoners;
 
     public Huis(Adres adres) {
-        setAdres(adres);
+        if (AdresUtil.adresBestaatAl(adres)) {
+            System.out.println("Adres bestaat al. Voer een andere adres in");
+        } else {
+            setAdres(adres);
+        }
     }
 
     public int getAantalKamers() {
@@ -23,11 +29,8 @@ public class Huis {
     }
 
     public void setAdres(Adres adres) {
-        if (huisMetAdresBestaatAl(adres)) {
-            System.out.println("Huis met adres " + adres.toString() + " bestaat al");
-        } else {
-            this.adres = adres;
-        }
+        this.adres = adres;
+        AdresUtil.voegNieuwAdresToe(adres);
     }
 
     public Persoon[] getBewoners() {
@@ -36,15 +39,6 @@ public class Huis {
 
     public void setBewoners(Persoon[] bewoners) {
         this.bewoners = bewoners;
-    }
-
-    /**
-     * Controleert of het adres van het (actieve) object gelijk is aan het adres van het argument
-     * @param adres
-     * @return boolean
-     */
-    boolean huisMetAdresBestaatAl(Adres adres) {
-        return this.getAdres().equals(adres);
     }
 
     @Override
