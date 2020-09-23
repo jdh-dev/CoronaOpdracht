@@ -1,5 +1,7 @@
 package org.example.joshua.corona.model;
 
+import java.util.Objects;
+
 public class Adres {
 
     private String straatnaam;
@@ -44,6 +46,22 @@ public class Adres {
 
     public void setWoonplaats(String woonplaats) {
         this.woonplaats = woonplaats;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Adres adres = (Adres) o;
+        return getHuisnummer() == adres.getHuisnummer() &&
+                getStraatnaam().equals(adres.getStraatnaam()) &&
+                getPostcode().equals(adres.getPostcode()) &&
+                getWoonplaats().equals(adres.getWoonplaats());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getStraatnaam(), getHuisnummer(), getPostcode(), getWoonplaats());
     }
 
     @Override
