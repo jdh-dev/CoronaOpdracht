@@ -2,61 +2,59 @@ package org.example.joshua.corona;
 
 import org.example.joshua.corona.model.*;
 import org.example.joshua.corona.utility.AdresUtil;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.*;
 
 public class CoronaTest {
 
     @Test
-    void testOfMaximumAantalPersonenIsBereikt() {
-        Adres adres = new Adres("John F. Kennedylaan", 8, "7314PS", "Apeldoorn");
-        Huis huis = new Huis(adres);
-        Persoon bewoner = new Persoon("Joshua");
-
-//        huis.setBewoners(new Persoon[] {bewoner});
-//        huis.voegPersoonToeInHuis(new Persoon("Mike"));
-//        huis.voegPersoonToeInHuis(new Persoon("Sjoerd"));
-//        huis.voegPersoonToeInHuis(new Persoon("Sam"));
-//        huis.voegPersoonToeInHuis(new Persoon("Rein"));
-//        huis.voegPersoonToeInHuis(new Persoon("Cihangir"));
-//        huis.voegPersoonToeInHuis(new Persoon("Madjid"));
-//        // Voeg nieuwe persoon toe na maximum
-//        huis.voegPersoonToeInHuis(new Persoon("Joris"));
-        //test of aantal personen nog steeds gelijk is aan max
-//        assertThat(huis.getGastenInhuis().length == GastenLijst.MAX_AANTAL_PERSONEN_IN_HUIS_EXCL_BEWONERS);
+    void testIfAddressWithNegativeNumberCanBeCreated() {
+        Adres adres = new Adres("Graaf Willemstraat", -1, "2033NJ", "Haarlem");
+        assertThat(adres.getHuisnummer()).isEqualTo(0);
     }
 
     @Test
-    void testGastenLijst() {
-        Adres adres = new Adres("John F. Kennedylaan", 8, "7314PS", "Apeldoorn");
-        GastHeer gastHeer = new GastHeer(new Huis(adres));
-
-        gastHeer.voegOfVerwijderGastInGastenlijst(new Persoon("Joshua"));
-        gastHeer.voegOfVerwijderGastInGastenlijst(new Persoon("sjdnfkj"));
-        gastHeer.voegOfVerwijderGastInGastenlijst(new Persoon("kjfnkjdsf"));
-        gastHeer.voegOfVerwijderGastInGastenlijst(new Persoon("Joskjndkndhua"));
-        gastHeer.voegOfVerwijderGastInGastenlijst(new Persoon("kjsa"));
-        gastHeer.voegOfVerwijderGastInGastenlijst(new Persoon("ksandk"));
-        gastHeer.voegOfVerwijderGastInGastenlijst(new Persoon("Frank"));
-        gastHeer.voegOfVerwijderGastInGastenlijst(new Persoon("Bert"));
-        gastHeer.voegOfVerwijderGastInGastenlijst(new Persoon("Ernie"));
-        for (Persoon persoon : gastHeer.getGastenLijst().getGastenInhuis()) {
-            System.out.println(persoon);
-        }
+    void testIfHouseWithAddressAlreadyExist() {
+        Adres adres = new Adres("Graaf Willemstraat", 1, "2033NJ", "Haarlem");
+        System.out.println("Maak nieuw adres aan met dezelfde waardes");
+        Adres adres2 = new Adres("Graaf Willemstraat", 1, "2033NJ", "Haarlem");
+        Huis h1 = Huis.maakHuis(adres);
+        Huis h2 = Huis.maakHuis(adres);
+        AdresUtil.printAlleAdressenUit();
+        assertThat(h2).isEqualTo(null);
     }
 
     @Test
-    void testOfAdresAlBestaat() {
-        Adres a1 = new Adres("Esdoornlaan", 38, "9421RK", "Bovensmilde");
-        Huis h1 = new Huis(a1);
-        // Maak huis met hetzelfde adres
-        Huis h2 = new Huis(a1);
-
-        // Controleer of aantal huizen nog steeds gelijk is aan 1
-        assertThat(AdresUtil.getAdressen().size()).isEqualTo(1);
+    void testIfHousesWithDifferentAddressesCanBeAdded() {
+        Adres a1 = new Adres("Graaf Willemstraat", 1, "2033NJ", "Haarlem");
+        Adres a2 = new Adres("Graaf Willemstraat", 2, "2033NJ", "Haarlem");
+        Huis h1 = Huis.maakHuis(a1);
+        Huis h2 = Huis.maakHuis(a2);
+        AdresUtil.printAlleAdressenUit();
+        assertThat(AdresUtil.getAdressen().size()).isEqualTo(2);
     }
 
+    @Test
+    void testIfSameBewonerCanBeAddedInAHouse() {
+        Adres a1 = new Adres("Graaf Willemstraat", 1, "2033NJ", "Haarlem");
+        Adres a2 = new Adres("Graaf Willemstraat", 2, "2033NJ", "Haarlem");
+        Huis h1 = Huis.maakHuis(a1);
 
+        Persoon b1 = new Persoon("Joshua", "", h1);
+        Persoon b2 = new Persoon("Joshua", "", h1);
+
+        System.out.println(b1);
+        assertThat(h1.getBewoners().size()).isEqualTo(1);
+    }
+
+    @AfterEach
+    void reset() {
+        AdresUtil.getAdressen().clear();
+    }
 
 }

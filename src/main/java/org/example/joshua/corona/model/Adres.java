@@ -2,14 +2,13 @@ package org.example.joshua.corona.model;
 
 import org.example.joshua.corona.utility.AdresUtil;
 
-import java.util.Objects;
-
 public class Adres {
 
     private String straatnaam;
     private int huisnummer;
     private String postcode;
     private String woonplaats;
+    private Huis huis;
 
     public Adres(String straatnaam, int huisnummer, String postcode, String woonplaats) {
         setStraatnaam(straatnaam);
@@ -54,20 +53,12 @@ public class Adres {
         this.woonplaats = woonplaats;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Adres adres = (Adres) o;
-        return getHuisnummer() == adres.getHuisnummer() &&
-                getStraatnaam().equals(adres.getStraatnaam()) &&
-                getPostcode().equals(adres.getPostcode()) &&
-                getWoonplaats().equals(adres.getWoonplaats());
+    public Huis getHuis() {
+        return huis;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getStraatnaam(), getHuisnummer(), getPostcode(), getWoonplaats());
+    public void setHuis(Huis huis) {
+        this.huis = huis;
     }
 
     @Override

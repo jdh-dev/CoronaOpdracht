@@ -2,51 +2,49 @@ package org.example.joshua.corona.model;
 
 import org.example.joshua.corona.utility.AdresUtil;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class Huis {
 
-    private int aantalKamers;
     private Adres adres;
-    private Persoon[] bewoners;
+    private Set<Persoon> bewoners = new HashSet<>();
 
-    public Huis(Adres adres) {
-        if (AdresUtil.adresBestaatAl(adres)) {
-            System.out.println("Adres bestaat al. Voer een andere adres in");
+    private Huis(Adres adres) {
+        this.adres = adres;
+        this.adres.setHuis(this);
+        AdresUtil.voegNieuwAdresToe(adres);
+    }
+
+    /**
+     * Factory methode die een Huis object instantieert mits het adres nog niet bestaat
+     * @param adres
+     * @return
+     */
+    public static Huis maakHuis(Adres adres) {
+        if (adres == null
+                || adres.getHuis() != null
+                || AdresUtil.adresBestaatAl(adres.getStraatnaam(), adres.getHuisnummer(), adres.getPostcode(), adres.getWoonplaats())) {
+            System.out.println("Adres is leeg of adres behoort al toe aan een ander huis. Voer een andere adres in");
+            return null;
         } else {
-            setAdres(adres);
+            return new Huis(adres);
         }
-    }
-
-    public int getAantalKamers() {
-        return aantalKamers;
-    }
-
-    public void setAantalKamers(int aantalKamers) {
-        this.aantalKamers = aantalKamers;
     }
 
     public Adres getAdres() {
         return adres;
     }
 
-    public void setAdres(Adres adres) {
-        this.adres = adres;
-        AdresUtil.voegNieuwAdresToe(adres);
-    }
-
-    public Persoon[] getBewoners() {
+    public Set<Persoon> getBewoners() {
         return bewoners;
-    }
-
-    public void setBewoners(Persoon[] bewoners) {
-        this.bewoners = bewoners;
     }
 
     @Override
     public String toString() {
         return "Huis{" +
-                "aantalKamers=" + aantalKamers +
                 ", adres=" + adres +
-                ", bewoners=" + bewoners.length +
+                ", bewoners=" + bewoners.size() +
                 '}';
     }
 

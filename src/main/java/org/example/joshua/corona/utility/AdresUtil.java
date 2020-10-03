@@ -3,17 +3,16 @@ package org.example.joshua.corona.utility;
 import org.example.joshua.corona.model.Adres;
 import org.example.joshua.corona.model.Huis;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Dit is een utility klasse die o.a. bijhoudt welke adressen zijn aangemaakt.
  */
 public class AdresUtil {
 
-    private static List<Adres> adressen = new ArrayList<>();
+    private static Set<Adres> adressen = new HashSet<>();
 
-    public static List<Adres> getAdressen() {
+    public static Set<Adres> getAdressen() {
         return adressen;
     }
 
@@ -22,7 +21,7 @@ public class AdresUtil {
      * @param adres Adres
      */
     public static void voegNieuwAdresToe(Adres adres) {
-        if (adresBestaatAl(adres)) {
+        if (adresBestaatAl(adres.getStraatnaam(), adres.getHuisnummer(), adres.getPostcode(), adres.getWoonplaats())) {
             System.out.println("Adres bestaat al in het systeem");
         } else {
             adressen.add(adres);
@@ -30,12 +29,23 @@ public class AdresUtil {
     }
 
     /**
-     * Deze methode controleert of het adres al bestaat
-     * @param adres van huis
-     * @return boolean
+     * Deze methode instantieert een Huis object mits het adres al niet bestaat
+     * @param straatnaam
+     * @param huisnummer
+     * @param postcode
+     * @param woonplaats
+     * @return
      */
-    public static boolean adresBestaatAl(Adres adres) {
-        return adressen.contains(adres);
+    public static boolean adresBestaatAl(String straatnaam, int huisnummer, String postcode, String woonplaats) {
+        for (Adres adres : adressen) {
+            if (adres.getHuisnummer() == huisnummer &&
+                    adres.getStraatnaam().equals(straatnaam) &&
+                    adres.getPostcode().equals(postcode) &&
+                    adres.getWoonplaats().equals(woonplaats)){
+                return true;
+            }
+        }
+        return false;
     }
 
     public static void printAlleAdressenUit() {
