@@ -1,6 +1,5 @@
 package org.example.joshua.corona.model;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
@@ -15,9 +14,7 @@ public class Reservering {
     private LocalDateTime reserveringsDatumEnTijd;
     private int aantalGasten;
     private boolean geaccepteerd;
-    public static final Duration MAX_UREN_PER_RESERVERING = Duration.ofMinutes(2);
     private static final int MAX_PERSONEN_BIJ_RESERVERING = 4;
-
 
     private Reservering(Gast aanvrager, ReserveringsType reserveringsType, LocalDateTime reserveringsDatumEnTijd,
                        int aantalGasten) {
@@ -45,7 +42,7 @@ public class Reservering {
             return null;
         }
         if(aantalGasten > MAX_PERSONEN_BIJ_RESERVERING) {
-            System.out.println("Kan niet meer dan 5 personen boeken voor een reservering");
+            System.out.println("Kan niet meer dan 4 personen boeken voor een reservering");
             return null;
         }
         return new Reservering(gast, reserveringsType, reserveringsDatumEnTijd, aantalGasten);

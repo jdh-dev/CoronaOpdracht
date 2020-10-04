@@ -92,7 +92,7 @@ public class CoronaTest {
         gastenLijstManager.behandelInkomendeReservering(r1);
         gastenLijstManager.behandelInkomendeReservering(r2);
 
-        assertThat(gastenLijstManager.aantalReserveringen()).isEqualTo(1);
+        assertThat(gastenLijstManager.aantalReserveringen()).isEqualTo(2);
     }
 
     @Test
@@ -107,6 +107,34 @@ public class CoronaTest {
         gastenLijstManager.behandelInkomendeReservering(r1);
 
         assertThat(gastenLijstManager.aantalReserveringen()).isEqualTo(0);
+    }
+
+    @Test
+    void testReservationsWithNumberOfGuestsBiggerThanMaximumAllowed() {
+        GastenLijstManager gastenLijstManager = new GastenLijstManager();
+        Adres a1 = new Adres("Graaf Willemstraat", 1, "2033NJ", "Haarlem");
+        Huis h1 = Huis.maakHuis(a1);
+
+        Gast gast = new Gast("Joshua", "234567", h1);
+
+        Reservering r1 = Reservering.maakReservering(gast, ReserveringsType.TELEFONISCH, LocalDateTime.of(2020, 11, 22, 18, 15), 4);
+        Reservering r2 = Reservering.maakReservering(gast, ReserveringsType.TELEFONISCH, LocalDateTime.of(2020, 11, 22, 18, 15), 4);
+        Reservering r3 = Reservering.maakReservering(gast, ReserveringsType.TELEFONISCH, LocalDateTime.of(2020, 11, 22, 18, 15), 4);
+        Reservering r4 = Reservering.maakReservering(gast, ReserveringsType.TELEFONISCH, LocalDateTime.of(2020, 11, 22, 18, 15), 4);
+        Reservering r5 = Reservering.maakReservering(gast, ReserveringsType.TELEFONISCH, LocalDateTime.of(2020, 11, 22, 18, 15), 4);
+        Reservering r6 = Reservering.maakReservering(gast, ReserveringsType.TELEFONISCH, LocalDateTime.of(2020, 11, 22, 18, 15), 4);
+        Reservering r7 = Reservering.maakReservering(gast, ReserveringsType.TELEFONISCH, LocalDateTime.of(2020, 11, 22, 18, 15), 4);
+        Reservering r8 = Reservering.maakReservering(gast, ReserveringsType.TELEFONISCH, LocalDateTime.of(2020, 11, 22, 18, 15), 4);
+
+        gastenLijstManager.behandelInkomendeReservering(r1);
+        gastenLijstManager.behandelInkomendeReservering(r2);
+        gastenLijstManager.behandelInkomendeReservering(r3);
+        gastenLijstManager.behandelInkomendeReservering(r4);
+        gastenLijstManager.behandelInkomendeReservering(r5);
+        gastenLijstManager.behandelInkomendeReservering(r6);
+        gastenLijstManager.behandelInkomendeReservering(r7);
+        gastenLijstManager.behandelInkomendeReservering(r8);
+
     }
 
     @AfterEach
