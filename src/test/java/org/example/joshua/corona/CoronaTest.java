@@ -52,7 +52,7 @@ public class CoronaTest {
 
     @Test
     void testBookReservationInThePastWithoutAcceptation() {
-        GastenLijstManager gastenLijstManager = new GastenLijstManager();
+        ReserveringManager reserveringManager = ReserveringManager.getInstance();
         Adres a1 = new Adres("Graaf Willemstraat", 1, "2033NJ", "Haarlem");
         Huis h1 = Huis.maakHuis(a1);
 
@@ -65,53 +65,7 @@ public class CoronaTest {
     }
 
     @Test
-    void testReservationWithMoreThanFivePeople() {
-        GastenLijstManager gastenLijstManager = new GastenLijstManager();
-        Adres a1 = new Adres("Graaf Willemstraat", 1, "2033NJ", "Haarlem");
-        Huis h1 = Huis.maakHuis(a1);
-
-        Gast gast = new Gast("Joshua", "234567", h1);
-
-        Reservering reservering = Reservering.maakReservering(gast, ReserveringsType.TELEFONISCH, LocalDateTime.of(2020, 3, 22, 18, 15), 6);
-        System.out.println(reservering);
-
-        assertThat(reservering).isEqualTo(null);
-    }
-
-    @Test
-    void testReservationsOnTheSameDateAndTime() {
-        GastenLijstManager gastenLijstManager = new GastenLijstManager();
-        Adres a1 = new Adres("Graaf Willemstraat", 1, "2033NJ", "Haarlem");
-        Huis h1 = Huis.maakHuis(a1);
-
-        Gast gast = new Gast("Joshua", "234567", h1);
-
-        Reservering r1 = Reservering.maakReservering(gast, ReserveringsType.TELEFONISCH, LocalDateTime.of(2020, 11, 22, 18, 15), 3);
-        Reservering r2 = Reservering.maakReservering(gast, ReserveringsType.TELEFONISCH, LocalDateTime.of(2020, 11, 22, 18, 15), 2);
-
-        gastenLijstManager.behandelInkomendeReservering(r1);
-        gastenLijstManager.behandelInkomendeReservering(r2);
-
-        assertThat(gastenLijstManager.aantalReserveringen()).isEqualTo(2);
-    }
-
-    @Test
-    void testReservationBeforeNoon() {
-        GastenLijstManager gastenLijstManager = new GastenLijstManager();
-        Adres a1 = new Adres("Graaf Willemstraat", 1, "2033NJ", "Haarlem");
-        Huis h1 = Huis.maakHuis(a1);
-
-        Gast gast = new Gast("Joshua", "234567", h1);
-
-        Reservering r1 = Reservering.maakReservering(gast, ReserveringsType.TELEFONISCH, LocalDateTime.of(2021, 10, 22, 8, 15), 3);
-        gastenLijstManager.behandelInkomendeReservering(r1);
-
-        assertThat(gastenLijstManager.aantalReserveringen()).isEqualTo(0);
-    }
-
-    @Test
-    void testReservationsWithNumberOfGuestsBiggerThanMaximumAllowed() {
-        GastenLijstManager gastenLijstManager = new GastenLijstManager();
+    void checkTeller() {
         Adres a1 = new Adres("Graaf Willemstraat", 1, "2033NJ", "Haarlem");
         Huis h1 = Huis.maakHuis(a1);
 
@@ -126,15 +80,100 @@ public class CoronaTest {
         Reservering r7 = Reservering.maakReservering(gast, ReserveringsType.TELEFONISCH, LocalDateTime.of(2020, 11, 22, 18, 15), 4);
         Reservering r8 = Reservering.maakReservering(gast, ReserveringsType.TELEFONISCH, LocalDateTime.of(2020, 11, 22, 18, 15), 4);
 
-        gastenLijstManager.behandelInkomendeReservering(r1);
-        gastenLijstManager.behandelInkomendeReservering(r2);
-        gastenLijstManager.behandelInkomendeReservering(r3);
-        gastenLijstManager.behandelInkomendeReservering(r4);
-        gastenLijstManager.behandelInkomendeReservering(r5);
-        gastenLijstManager.behandelInkomendeReservering(r6);
-        gastenLijstManager.behandelInkomendeReservering(r7);
-        gastenLijstManager.behandelInkomendeReservering(r8);
+        System.out.println(r1.getReserveringTeller());
+        System.out.println(r2.getReserveringTeller());
+        System.out.println(r3.getReserveringTeller());
+        System.out.println(r4.getReserveringTeller());
+        System.out.println(r5.getReserveringTeller());
+        System.out.println(r6.getReserveringTeller());
+        System.out.println(r7.getReserveringTeller());
+        System.out.println(r8.getReserveringTeller());
+    }
 
+    @Test
+    void testReservationWithMoreThanFivePeople() {
+        ReserveringManager reserveringManager = ReserveringManager.getInstance();
+        Adres a1 = new Adres("Graaf Willemstraat", 1, "2033NJ", "Haarlem");
+        Huis h1 = Huis.maakHuis(a1);
+
+        Gast gast = new Gast("Joshua", "234567", h1);
+
+        Reservering reservering = Reservering.maakReservering(gast, ReserveringsType.TELEFONISCH, LocalDateTime.of(2020, 3, 22, 18, 15), 6);
+        System.out.println(reservering);
+
+        assertThat(reservering).isEqualTo(null);
+    }
+
+    @Test
+    void testReservationsOnTheSameDateAndTime() {
+        ReserveringManager reserveringManager = ReserveringManager.getInstance();
+        Adres a1 = new Adres("Graaf Willemstraat", 1, "2033NJ", "Haarlem");
+        Huis h1 = Huis.maakHuis(a1);
+
+        Gast gast = new Gast("Joshua", "234567", h1);
+
+        Reservering r1 = Reservering.maakReservering(gast, ReserveringsType.TELEFONISCH, LocalDateTime.of(2020, 11, 22, 18, 15), 3);
+        Reservering r2 = Reservering.maakReservering(gast, ReserveringsType.TELEFONISCH, LocalDateTime.of(2020, 11, 22, 18, 15), 2);
+
+        reserveringManager.behandelReserveringen(r1);
+        reserveringManager.behandelReserveringen(r2);
+
+        assertThat(reserveringManager.aantalReserveringen()).isEqualTo(2);
+    }
+
+    @Test
+    void testReservationBeforeNoon() {
+        ReserveringManager reserveringManager = ReserveringManager.getInstance();
+        Adres a1 = new Adres("Graaf Willemstraat", 1, "2033NJ", "Haarlem");
+        Huis h1 = Huis.maakHuis(a1);
+
+        Gast gast = new Gast("Joshua", "234567", h1);
+
+        Reservering r1 = Reservering.maakReservering(gast, ReserveringsType.TELEFONISCH, LocalDateTime.of(2021, 10, 22, 8, 15), 3);
+        reserveringManager.behandelReserveringen(r1);
+
+        assertThat(reserveringManager.aantalReserveringen()).isEqualTo(0);
+    }
+
+    @Test
+    void testReservationsWithNumberOfGuestsBiggerThanMaximumAllowed() {
+        ReserveringManager reserveringManager = ReserveringManager.getInstance();
+        Adres a1 = new Adres("Graaf Willemstraat", 1, "2033NJ", "Haarlem");
+        Huis h1 = Huis.maakHuis(a1);
+
+        Gast gast = new Gast("Joshua", "234567", h1);
+
+        Reservering r1 = Reservering.maakReservering(gast, ReserveringsType.TELEFONISCH, LocalDateTime.of(2020, 11, 22, 18, 15), 4);
+        Reservering r2 = Reservering.maakReservering(gast, ReserveringsType.TELEFONISCH, LocalDateTime.of(2020, 11, 22, 18, 15), 4);
+        Reservering r3 = Reservering.maakReservering(gast, ReserveringsType.TELEFONISCH, LocalDateTime.of(2020, 11, 22, 18, 15), 4);
+        Reservering r4 = Reservering.maakReservering(gast, ReserveringsType.TELEFONISCH, LocalDateTime.of(2020, 11, 22, 18, 15), 4);
+        Reservering r5 = Reservering.maakReservering(gast, ReserveringsType.TELEFONISCH, LocalDateTime.of(2020, 11, 22, 18, 15), 4);
+        Reservering r6 = Reservering.maakReservering(gast, ReserveringsType.TELEFONISCH, LocalDateTime.of(2020, 11, 22, 18, 15), 4);
+        Reservering r7 = Reservering.maakReservering(gast, ReserveringsType.TELEFONISCH, LocalDateTime.of(2020, 11, 22, 18, 15), 4);
+        Reservering r8 = Reservering.maakReservering(gast, ReserveringsType.TELEFONISCH, LocalDateTime.of(2020, 11, 22, 18, 15), 4);
+
+        reserveringManager.behandelReserveringen(r1);
+        reserveringManager.behandelReserveringen(r2);
+        reserveringManager.behandelReserveringen(r3);
+        reserveringManager.behandelReserveringen(r4);
+        reserveringManager.behandelReserveringen(r5);
+        reserveringManager.behandelReserveringen(r6);
+        reserveringManager.behandelReserveringen(r7);
+        reserveringManager.behandelReserveringen(r8);
+
+        assertThat(reserveringManager.aantalReserveringen()).isLessThan(30);
+    }
+
+    @Test
+    void testReservationBookedAfterNinePMShouldNotBePossible() {
+        ReserveringManager reserveringManager = ReserveringManager.getInstance();
+        Adres a1 = new Adres("Graaf Willemstraat", 1, "2033NJ", "Haarlem");
+        Huis h1 = Huis.maakHuis(a1);
+        Gast gast = new Gast("Joshua", "234567", h1);
+
+        Reservering reservering = Reservering.maakReservering(gast, ReserveringsType.AAN_DE_DEUR, LocalDateTime.of(2020, 12, 20, 22, 0), 3);
+
+        assertThat(reservering).isEqualTo(null);
     }
 
     @AfterEach

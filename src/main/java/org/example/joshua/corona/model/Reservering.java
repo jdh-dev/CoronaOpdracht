@@ -13,7 +13,6 @@ public class Reservering {
     private LocalDateTime datumVanReservering;
     private LocalDateTime reserveringsDatumEnTijd;
     private int aantalGasten;
-    private boolean geaccepteerd;
     private static final int MAX_PERSONEN_BIJ_RESERVERING = 4;
 
     private Reservering(Gast aanvrager, ReserveringsType reserveringsType, LocalDateTime reserveringsDatumEnTijd,
@@ -25,7 +24,6 @@ public class Reservering {
         this.datumVanReservering = LocalDateTime.now();
         setReserveringsDatumEnTijd(reserveringsDatumEnTijd);
         setAantalGasten(aantalGasten);
-        this.geaccepteerd = false;
     }
 
     /**
@@ -37,8 +35,8 @@ public class Reservering {
      * @return
      */
     public static Reservering maakReservering(Gast gast, ReserveringsType reserveringsType, LocalDateTime reserveringsDatumEnTijd, int aantalGasten) {
-        if(reserveringsDatumEnTijd.isBefore(LocalDateTime.now()) || reserveringsDatumEnTijd.toLocalTime().isBefore(LocalTime.NOON)) {
-            System.out.println("Kan geen reserveringen maken die eerder dan vandaag plaatsvinden of op dagen voor 12:00.");
+        if(reserveringsDatumEnTijd.isBefore(LocalDateTime.now()) || reserveringsDatumEnTijd.toLocalTime().isBefore(LocalTime.NOON) || reserveringsDatumEnTijd.toLocalTime().isAfter(LocalTime.of(21, 0))) {
+            System.out.println("Kan geen reserveringen maken in het verleden of op de aangegeven tijdstip");
             return null;
         }
         if(aantalGasten > MAX_PERSONEN_BIJ_RESERVERING) {
@@ -93,14 +91,6 @@ public class Reservering {
         return datumVanReservering;
     }
 
-    public boolean isGeaccepteerd() {
-        return geaccepteerd;
-    }
-
-    public void setGeaccepteerd(boolean geaccepteerd) {
-        this.geaccepteerd = geaccepteerd;
-    }
-
     @Override
     public String toString() {
         return "Reservering{" +
@@ -109,8 +99,11 @@ public class Reservering {
                 ", datumVanReservering=" + datumVanReservering +
                 ", reserveringsDatumEnTijd=" + reserveringsDatumEnTijd +
                 ", aantalGasten=" + aantalGasten +
-                ", geaccepteerd=" + geaccepteerd +
                 '}';
+    }
+
+    public static int getReserveringTeller() {
+        return reserveringTeller;
     }
 
     /**

@@ -7,29 +7,39 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
-public class GastenLijstManager {
+public class ReserveringManager {
 
+    private static ReserveringManager reserveringManager;
     private GastenLijst gastenLijst = new GastenLijst();
     public static final String DATE_TIME_PATTERN = "dd-MM-yyyy HH:mm";
     public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_TIME_PATTERN);
     public static final Duration MAX_UREN_PER_RESERVERING = Duration.ofHours(2);
     public static final int MAX_AANTAL_GASTEN = 30;
+    private static List<Reservering> reserveringen = new ArrayList<>();
 
-    /**
-     * Deze methode behandelt alle inkomende reserveringen
-     * @param reservering
-     */
-    public void behandelInkomendeReservering(Reservering reservering) {
-        if(reservering == null) {
-            System.out.println("Reservering is niet goedgekeurd");
+    private ReserveringManager(){}
+
+    public static ReserveringManager getInstance() {
+        if (reserveringManager != null) {
+            return reserveringManager;
+        }
+        return new ReserveringManager();
+    }
+
+    public void behandelReservering(Gast gast, ReserveringsType reserveringsType,
+                                LocalDateTime reserveringsDatumEnTijd, int aantalGasten) {
+        if (gast == null) {
+            System.out.println("Reservering moet op naam staan van een persoon.");
             return;
         }
-        if (gastenLijst.aantalGastenGeboektOpEenTijdstip(reservering.getReserveringsDatumEnTijd()) + reservering.getAantalGasten() > MAX_AANTAL_GASTEN) {
-            System.out.println("Kan niet reserveren op dit tijdstip. Maximum aantal gasten is op dit tijdstip bereikt");
+        if ((gastenLijst.aantalGastenGeboektOpEenTijdstip(reserveringsDatumEnTijd) + aantalGasten) > MAX_AANTAL_GASTEN) {
+            System.out.println("Kan niet reserveren. Maximum aantal gasten is op dit tijdstip bereikt");
         } else {
-            reservering.setGeaccepteerd(true);
+            final Reservering reservering = Reservering.maakReservering(gast, reserveringsType, reserveringsDatumEnTijd, aantalGasten);
             gastenLijst.voegReserveringToe(reservering);
             System.out.println("Reservering is goedgekeurd en staat vast op " + reservering.getReserveringsDatumEnTijd().format(formatter));
         }
