@@ -1,6 +1,7 @@
 package org.example.joshua.corona.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Gast extends Persoon {
@@ -12,11 +13,10 @@ public class Gast extends Persoon {
     }
 
     public List<Reservering> getReserveringen() {
+        if (reserveringen == null) {
+            return Collections.emptyList();
+        }
         return reserveringen;
-    }
-
-    public void setReserveringen(List<Reservering> reserveringen) {
-        this.reserveringen = reserveringen;
     }
 
     @Override

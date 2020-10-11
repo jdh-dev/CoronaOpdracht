@@ -1,7 +1,5 @@
 package org.example.joshua.corona.model;
 
-import org.example.joshua.corona.utility.AdresUtil;
-
 public class Adres {
 
     private String straatnaam;
