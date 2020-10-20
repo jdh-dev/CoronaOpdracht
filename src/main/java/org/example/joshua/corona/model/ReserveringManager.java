@@ -36,6 +36,9 @@ public class ReserveringManager {
             System.out.println("Reservering moet op naam staan van een persoon.");
             return;
         }
+        if (reserveringsType == ReserveringsType.AAN_DE_DEUR) {
+            reserveringsDatumEnTijd = LocalDateTime.now();
+        }
         if ((gastenLijst.aantalGastenGeboektOpEenTijdstip(reserveringsDatumEnTijd) + aantalGasten) > MAX_AANTAL_GASTEN) {
             System.out.println("Kan niet reserveren. Maximum aantal gasten is op dit tijdstip bereikt");
         } else {
