@@ -1,4 +1,4 @@
-package org.example.joshua.corona.model;
+package org.joshua.corona.model;
 
 import java.time.Duration;
 import java.time.LocalDateTime;

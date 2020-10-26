@@ -1,7 +1,6 @@
-package org.example.joshua.corona.utility;
+package org.joshua.corona.utility;
 
-import org.example.joshua.corona.model.Adres;
-import org.example.joshua.corona.model.Huis;
+import org.joshua.corona.model.Adres;
 
 import java.util.*;
 

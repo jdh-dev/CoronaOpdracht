@@ -1,6 +1,4 @@
-package org.example.joshua.corona.model;
-
-import org.example.joshua.corona.utility.ReserveringThread;
+package org.joshua.corona.model;
 
 /**
  * Singleton klasse van Restaurant
@@ -26,11 +24,6 @@ public class Restaurant {
             restaurant = new Restaurant();
         }
         return restaurant;
-    }
-
-    public void openForBusiness() {
-        ReserveringThread reserveringThread = new ReserveringThread();
-        reserveringThread.start();
     }
 
     public Tafel[] getTafels() {

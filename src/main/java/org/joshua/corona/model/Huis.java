@@ -1,6 +1,6 @@
-package org.example.joshua.corona.model;
+package org.joshua.corona.model;
 
-import org.example.joshua.corona.utility.AdresUtil;
+import org.joshua.corona.utility.AdresUtil;
 
 import java.util.HashSet;
 import java.util.Set;

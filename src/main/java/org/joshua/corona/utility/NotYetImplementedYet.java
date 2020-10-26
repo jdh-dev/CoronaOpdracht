@@ -1,4 +1,4 @@
-package org.example.joshua.corona.utility;
+package org.joshua.corona.utility;
 
 public class NotYetImplementedYet extends RuntimeException {
 

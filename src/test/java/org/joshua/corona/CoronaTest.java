@@ -1,7 +1,7 @@
-package org.example.joshua.corona;
+package org.joshua.corona;
 
-import org.example.joshua.corona.model.*;
-import org.example.joshua.corona.utility.AdresUtil;
+import org.joshua.corona.utility.AdresUtil;
+import org.joshua.corona.model.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 

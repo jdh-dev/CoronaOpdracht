@@ -1,4 +1,4 @@
-package org.example.joshua.corona.model;
+package org.joshua.corona.model;
 
 import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.multimap.HashSetValuedHashMap;

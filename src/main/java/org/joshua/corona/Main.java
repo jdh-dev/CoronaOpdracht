@@ -1,6 +1,6 @@
-package org.example.joshua.corona;
+package org.joshua.corona;
 
-import org.example.joshua.corona.model.Restaurant;
+import org.joshua.corona.model.Restaurant;
 
 public class Main {
 
