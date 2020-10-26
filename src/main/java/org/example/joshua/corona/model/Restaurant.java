@@ -31,9 +31,6 @@ public class Restaurant {
     public void openForBusiness() {
         ReserveringThread reserveringThread = new ReserveringThread();
         reserveringThread.start();
-
-
-
     }
 
     public Tafel[] getTafels() {
@@ -59,13 +56,13 @@ public class Restaurant {
     /**
      * Private klasse waar alleen de klasse Restaurant van af weet
      */
-    private class Tafel {
+     class Tafel {
+
+        private int tafelNummer;
 
         public Tafel(int tafelNummer) {
             this.tafelNummer = tafelNummer;
         }
-
-        private int tafelNummer;
 
         public int getTafelNummer() {
             return tafelNummer;

@@ -1,5 +1,6 @@
 package org.example.joshua.corona.model;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
@@ -35,7 +36,7 @@ public class Reservering {
      * @return
      */
     public static Reservering maakReservering(Gast gast, ReserveringsType reserveringsType, LocalDateTime reserveringsDatumEnTijd, int aantalGasten) {
-        if(reserveringsDatumEnTijd.isBefore(LocalDateTime.now()) || reserveringsDatumEnTijd.toLocalTime().isBefore(LocalTime.NOON) || reserveringsDatumEnTijd.toLocalTime().isAfter(LocalTime.of(21, 0))) {
+        if(reserveringsDatumEnTijd.isBefore(LocalDateTime.now().minus(Duration.ofMinutes(5))) || reserveringsDatumEnTijd.toLocalTime().isBefore(LocalTime.NOON) || reserveringsDatumEnTijd.toLocalTime().isAfter(LocalTime.of(21, 0))) {
             System.out.println("Kan geen reserveringen maken in het verleden of op de aangegeven tijdstip");
             return null;
         }

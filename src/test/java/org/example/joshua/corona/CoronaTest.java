@@ -112,11 +112,8 @@ public class CoronaTest {
 
         Gast gast = new Gast("Joshua", "234567", h1);
 
-        Reservering r1 = Reservering.maakReservering(gast, ReserveringsType.TELEFONISCH, LocalDateTime.of(2020, 11, 22, 18, 15), 3);
-        Reservering r2 = Reservering.maakReservering(gast, ReserveringsType.TELEFONISCH, LocalDateTime.of(2020, 11, 22, 18, 15), 2);
-
-        reserveringManager.behandelReserveringen(r1);
-        reserveringManager.behandelReserveringen(r2);
+        reserveringManager.behandelReservering(gast, ReserveringsType.AAN_DE_DEUR, LocalDateTime.of(2020, 11, 22, 18, 15), 3);
+        reserveringManager.behandelReservering(gast, ReserveringsType.AAN_DE_DEUR, LocalDateTime.of(2020, 11, 22, 18, 15), 2);
 
         assertThat(reserveringManager.aantalReserveringen()).isEqualTo(2);
     }
@@ -130,7 +127,7 @@ public class CoronaTest {
         Gast gast = new Gast("Joshua", "234567", h1);
 
         Reservering r1 = Reservering.maakReservering(gast, ReserveringsType.TELEFONISCH, LocalDateTime.of(2021, 10, 22, 8, 15), 3);
-        reserveringManager.behandelReserveringen(r1);
+        reserveringManager.behandelReservering(gast, ReserveringsType.AAN_DE_DEUR, LocalDateTime.now(), 4);
 
         assertThat(reserveringManager.aantalReserveringen()).isEqualTo(0);
     }
@@ -140,26 +137,16 @@ public class CoronaTest {
         ReserveringManager reserveringManager = ReserveringManager.getInstance();
         Adres a1 = new Adres("Graaf Willemstraat", 1, "2033NJ", "Haarlem");
         Huis h1 = Huis.maakHuis(a1);
-
         Gast gast = new Gast("Joshua", "234567", h1);
 
-        Reservering r1 = Reservering.maakReservering(gast, ReserveringsType.TELEFONISCH, LocalDateTime.of(2020, 11, 22, 18, 15), 4);
-        Reservering r2 = Reservering.maakReservering(gast, ReserveringsType.TELEFONISCH, LocalDateTime.of(2020, 11, 22, 18, 15), 4);
-        Reservering r3 = Reservering.maakReservering(gast, ReserveringsType.TELEFONISCH, LocalDateTime.of(2020, 11, 22, 18, 15), 4);
-        Reservering r4 = Reservering.maakReservering(gast, ReserveringsType.TELEFONISCH, LocalDateTime.of(2020, 11, 22, 18, 15), 4);
-        Reservering r5 = Reservering.maakReservering(gast, ReserveringsType.TELEFONISCH, LocalDateTime.of(2020, 11, 22, 18, 15), 4);
-        Reservering r6 = Reservering.maakReservering(gast, ReserveringsType.TELEFONISCH, LocalDateTime.of(2020, 11, 22, 18, 15), 4);
-        Reservering r7 = Reservering.maakReservering(gast, ReserveringsType.TELEFONISCH, LocalDateTime.of(2020, 11, 22, 18, 15), 4);
-        Reservering r8 = Reservering.maakReservering(gast, ReserveringsType.TELEFONISCH, LocalDateTime.of(2020, 11, 22, 18, 15), 4);
-
-        reserveringManager.behandelReserveringen(r1);
-        reserveringManager.behandelReserveringen(r2);
-        reserveringManager.behandelReserveringen(r3);
-        reserveringManager.behandelReserveringen(r4);
-        reserveringManager.behandelReserveringen(r5);
-        reserveringManager.behandelReserveringen(r6);
-        reserveringManager.behandelReserveringen(r7);
-        reserveringManager.behandelReserveringen(r8);
+        reserveringManager.behandelReservering(gast, ReserveringsType.AAN_DE_DEUR, LocalDateTime.now(), 4);
+        reserveringManager.behandelReservering(gast, ReserveringsType.AAN_DE_DEUR, LocalDateTime.now(), 4);
+        reserveringManager.behandelReservering(gast, ReserveringsType.AAN_DE_DEUR, LocalDateTime.now(), 4);
+        reserveringManager.behandelReservering(gast, ReserveringsType.AAN_DE_DEUR, LocalDateTime.now(), 4);
+        reserveringManager.behandelReservering(gast, ReserveringsType.AAN_DE_DEUR, LocalDateTime.now(), 4);
+        reserveringManager.behandelReservering(gast, ReserveringsType.AAN_DE_DEUR, LocalDateTime.now(), 4);
+        reserveringManager.behandelReservering(gast, ReserveringsType.AAN_DE_DEUR, LocalDateTime.now(), 4);
+        reserveringManager.behandelReservering(gast, ReserveringsType.AAN_DE_DEUR, LocalDateTime.now(), 4);
 
         assertThat(reserveringManager.aantalReserveringen()).isLessThan(30);
     }
